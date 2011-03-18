@@ -129,30 +129,41 @@ my $main_sub = sub {
             $trend = 'down'; # failing
         }
         
-        # rising
+        #    up     level    down (or first run)
+        #  <=48       0   - <=46 down 
+        #   >49 up -  1   - <=48 down
+        #   >53 up -  2   - <=52 down
+        #   >56 up - auto - >=53 down
+        
         my $new_level = 'auto';
-        if ( $trend eq 'up' || $rnum == 1 ) {
+
+        # rising
+        if ( $trend eq 'up' ) {
             if ( $tcpu > 56 ) {
                 $new_level = 'auto';
-            } elsif ( $tcpu > 51 ) {
+            } elsif ( $tcpu > 53 ) {
                 $new_level = '2';
-            } elsif ( $tcpu > 48 ) {
+            } elsif ( $tcpu > 49 ) {
                 $new_level = '1';
             } else {
                 $new_level = '0';
             }
 
-        # failing 
-        } elsif ( $trend eq 'down' ) {
-            if ( $tcpu > 54 ) {
-                $new_level = 'auto';
-            } elsif ( $tcpu > 49 ) {
-                $new_level = '2';
-            } elsif  ( $tcpu > 47 ) {
-                $new_level = '1';
-            } else {
+        # failing or first run 
+        } elsif ( $trend eq 'down' || $rnum == 1 ) {
+            if ( $tcpu <= 46 ) {
                 $new_level = '0';
+            } elsif ( $tcpu <= 48 ) {
+                $new_level = '1';
+            } elsif ( $tcpu <= 52 ) {
+                $new_level = '2';
+            } else {
+                $new_level = 'auto';
             }
+        
+        # same - not changed
+        } else {
+            $new_level = $fan_data->{level};
         }
         
         print "trend: $trend\n" if $ver >= 4;
