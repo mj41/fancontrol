@@ -130,28 +130,28 @@ my $main_sub = sub {
         }
         
         # rising
-        my $new_level = 7;
-        if ( $trend eq 'up' ) {
+        my $new_level = 'auto';
+        if ( $trend eq 'up' || $rnum == 1 ) {
             if ( $tcpu > 56 ) {
                 $new_level = 'auto';
             } elsif ( $tcpu > 51 ) {
-                $new_level = 2;
+                $new_level = '2';
             } elsif ( $tcpu > 48 ) {
-                $new_level = 1;
+                $new_level = '1';
             } else {
-                $new_level = 0;
+                $new_level = '0';
             }
 
         # failing 
-        } else {
+        } elsif ( $trend eq 'down' ) {
             if ( $tcpu > 54 ) {
                 $new_level = 'auto';
             } elsif ( $tcpu > 49 ) {
-                $new_level = 2;
+                $new_level = '2';
             } elsif  ( $tcpu > 47 ) {
-                $new_level = 1;
+                $new_level = '1';
             } else {
-                $new_level = 0;
+                $new_level = '0';
             }
         }
         
@@ -160,7 +160,7 @@ my $main_sub = sub {
             print "Actual temperature $tcpu, level $fan_data->{level}.\n" if $ver >= 3;
         }
         if ( $new_level ne $fan_data->{level} ) {
-            print "Setting level to '$new_level' ($tcpu C), previous level was '$fan_data->{level}' ($prev_tcpu C). Trend is $trend.\n" if $ver >= 2;
+            print "Setting level to '$new_level' ($tcpu C), previous level was '$fan_data->{level}' ($prev_tcpu C). Trend is '$trend'.\n" if $ver >= 2;
             set_fan_level( $fan_proc_fpath, $new_level );
         
         } elsif ( $tcpu ne $prev_tcpu ) {
