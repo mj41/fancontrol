@@ -1,10 +1,15 @@
 My experimental Perl 5 script to controll Lenovo ThinkPad T410s (SSD disc) 
 fan speed/rpm/noise.
 
+See https://github.com/mj41/fancontrol/blob/master/examples.txt
+
+
 You need to add allow experimental ACPI feature. Add line
  options thinkpad_acpi fan_control=1
 somewhere in /etc/modprobe.d/...
 
-See
+See for more help
 * http://www.thinkwiki.org/wiki/How_to_control_fan_speed
 * http://www.thinkwiki.org/wiki/ACPI_fan_control_script#Variable_speed_control_scripts
+
+Be cafefull. Absolutly no warrantly.
