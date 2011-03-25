@@ -129,41 +129,22 @@ my $main_sub = sub {
             $trend = 'down'; # failing
         }
         
-        #    up     level    down (or first run)
-        #  <=48       0   - <=46 down 
-        #   >49 up -  1   - <=48 down
-        #   >53 up -  2   - <=52 down
-        #   >56 up - auto - >=53 down
+        # temperature C  | level
+        # --------------------------
+        # >= 57          | auto
+        # 54, 55, 56     | 2
+        # 50, 51, 52, 53 | 1
+        # <= 49          | 0
         
         my $new_level = 'auto';
-
-        # rising
-        if ( $trend eq 'up' ) {
-            if ( $tcpu > 56 ) {
-                $new_level = 'auto';
-            } elsif ( $tcpu > 53 ) {
-                $new_level = '2';
-            } elsif ( $tcpu > 49 ) {
-                $new_level = '1';
-            } else {
-                $new_level = '0';
-            }
-
-        # failing or first run 
-        } elsif ( $trend eq 'down' || $rnum == 1 ) {
-            if ( $tcpu <= 46 ) {
-                $new_level = '0';
-            } elsif ( $tcpu <= 48 ) {
-                $new_level = '1';
-            } elsif ( $tcpu <= 52 ) {
-                $new_level = '2';
-            } else {
-                $new_level = 'auto';
-            }
-        
-        # same - not changed
+        if ( $tcpu >= 57 ) {
+            $new_level = 'auto';
+        } elsif ( $tcpu >= 54 ) {
+            $new_level = '2';
+        } elsif ( $tcpu >= 50 ) {
+            $new_level = '1';
         } else {
-            $new_level = $fan_data->{level};
+            $new_level = '0';
         }
         
         print "trend: $trend\n" if $ver >= 4;
@@ -232,12 +213,12 @@ fancontrol - Controlling fan speed by CPU temperature.
 
 =head1 SYNOPSIS
 
-perl daemonize.pl [options]
+perl fancontrol.pl [options]
 
  Options:
-   --daemon-start .. Run fancontrol as daemon.
-   --daemon-stop .. Stop fancontrol daemon.
-   --pidfile .. Path to pid file.
+   --daemon-start .. Run as daemon.
+   --daemon-stop .. Stop daemon.
+   --pidfile .. Path to daemon pid file.
    --help
    --ver=$NUM .. Verbosity level. Default 2.
 

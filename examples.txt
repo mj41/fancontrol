@@ -1,67 +1,78 @@
-# perl fancontrol.pl --ver=3
-Actual temperature 55, level 1.
-Setting level to 'auto' (55 C), previous level was '1' (55 C). Trend is 'same'.
-Setting level to '2' (52 C), previous level was 'auto' (55 C). Trend is 'down'.
-New CPU temperature 49.
-Setting level to '1' (48 C), previous level was '2' (49 C). Trend is 'down'.
-New CPU temperature 50.
-New CPU temperature 51.
-Setting level to '2' (54 C), previous level was '1' (51 C). Trend is 'up'.
+Some examples:
+
+#> perl fancontrol.pl --ver=3
+Actual temperature 51, level auto.
+Setting level to '1' (51 C), previous level was 'auto' (51 C). Trend is 'same'.
 New CPU temperature 52.
-New CPU temperature 51.
-New CPU temperature 49.
-Setting level to '1' (48 C), previous level was '2' (49 C). Trend is 'down'.
-Setting level to '0' (49 C), previous level was '1' (48 C). Trend is 'up'.
-Setting level to '1' (51 C), previous level was '0' (49 C). Trend is 'up'.
+Setting level to '2' (54 C), previous level was '1' (52 C). Trend is 'up'.
+Setting level to '1' (51 C), previous level was '2' (54 C). Trend is 'down'.
 Setting level to '2' (54 C), previous level was '1' (51 C). Trend is 'up'.
+New CPU temperature 55.
+New CPU temperature 54.
+Setting level to '1' (52 C), previous level was '2' (54 C). Trend is 'down'.
+Setting level to '2' (54 C), previous level was '1' (52 C). Trend is 'up'.
+Setting level to '1' (52 C), previous level was '2' (54 C). Trend is 'down'.
+Setting level to '2' (54 C), previous level was '1' (52 C). Trend is 'up'.
+Setting level to '1' (53 C), previous level was '2' (54 C). Trend is 'down'.
+Setting level to '2' (54 C), previous level was '1' (53 C). Trend is 'up'.
+Setting level to '1' (53 C), previous level was '2' (54 C). Trend is 'down'.
+Setting level to '2' (54 C), previous level was '1' (53 C). Trend is 'up'.
+Setting level to '1' (52 C), previous level was '2' (54 C). Trend is 'down'.
 New CPU temperature 51.
+New CPU temperature 52.
+Setting level to '2' (54 C), previous level was '1' (52 C). Trend is 'up'.
+Setting level to '1' (52 C), previous level was '2' (54 C). Trend is 'down'.
+New CPU temperature 53.
+Setting level to '2' (54 C), previous level was '1' (53 C). Trend is 'up'.
+Setting level to '1' (52 C), previous level was '2' (54 C). Trend is 'down'.
+New CPU temperature 53.
+New CPU temperature 52.
+Setting level to '2' (54 C), previous level was '1' (52 C). Trend is 'up'.
+Setting level to '1' (53 C), previous level was '2' (54 C). Trend is 'down'.
 
 
-# perl fancontrol.pl --help
+#> perl fancontrol.pl --help
 Usage:
-    perl daemonize.pl [options]
+    perl fancontrol.pl [options]
 
      Options:
-       --daemon-start .. Run fancontrol as daemon.
-       --daemon-stop .. Stop fancontrol daemon.
-       --pidfile .. Path to pid file.
+       --daemon-start .. Run as daemon.
+       --daemon-stop .. Stop daemon.
+       --pidfile .. Path to daemon pid file.
        --help
        --ver=$NUM .. Verbosity level. Default 2.
 
 
 
-# perl fancontrol.pl --daemon-start
-Setting verbose level to 0.
+#> perl fancontrol.pl --daemon-start
 Daemon starter (cat '/var/run/fancontrol-perl.pid').
 
-# cat '/var/run/fancontrol-perl.pid'
-28495
+#> cat '/var/run/fancontrol-perl.pid'
+27527
 
-# perl fancontrol.pl --daemon-start
-Can't start. Already running as daemon (pid 28495, pidfile '/var/run/fancontrol-perl.pid').
+#> perl fancontrol.pl --daemon-start
+Can't start. Already running as daemon (pid 27527, pidfile '/var/run/fancontrol-perl.pid').
 
-# perl fancontrol.pl --daemon-stop
+#> perl fancontrol.pl --daemon-stop
 Fancontrol daemon stopped.
 
-
-
-# perl fancontrol.pl --ver=10
+#> perl fancontrol.pl --ver=10
 Run number: 1
 status:		enabled
-speed:		3441
-level:		2
+speed:		1956
+level:		1
 commands:	level <level> (<level> is 0-7, auto, disengaged, full-speed)
 commands:	enable, disable
 commands:	watchdog <timeout> (<timeout> is 0 (off), 1-120 (seconds))
 ||status|| ||enabled|| |||| ('status:		enabled')
-||speed|| ||3441|| |||| ('speed:		3441')
-||level|| ||2|| |||| ('level:		2')
+||speed|| ||1956|| |||| ('speed:		1956')
+||level|| ||1|| |||| ('level:		1')
 ||commands|| ||level <level> || ||(<level> is 0-7, auto, disengaged, full-speed)|| ('commands:	level <level> (<level> is 0-7, auto, disengaged, full-speed)')
 ||commands|| ||enable, disable|| |||| ('commands:	enable, disable')
 ||commands|| ||watchdog <timeout> || ||(<timeout> is 0 (off), 1-120 (seconds))|| ('commands:	watchdog <timeout> (<timeout> is 0 (off), 1-120 (seconds))')
 $VAR1 = {
-          'level' => '2',
-          'speed' => '3441',
+          'level' => '1',
+          'speed' => '1956',
           'status' => 'enabled',
           'commands' => {
                           'enable, disable' => 1,
@@ -69,30 +80,30 @@ $VAR1 = {
                           'level <level>' => 1
                         }
         };
-temperature:             50 C
-||temperature|| ||50 C|| |||| ('temperature:             50 C')
+temperature:             52 C
+||temperature|| ||52 C|| |||| ('temperature:             52 C')
 $VAR1 = {
-          'temperature' => '50 C'
+          'temperature' => '52 C'
         };
-CPU temperature: 50 (degree Celsia)
+CPU temperature: 52 (degree Celsia)
 trend: same
-Actual temperature 50, level 2.
+Actual temperature 52, level 1.
 Run number: 2
 status:		enabled
-speed:		3444
-level:		2
+speed:		1953
+level:		1
 commands:	level <level> (<level> is 0-7, auto, disengaged, full-speed)
 commands:	enable, disable
 commands:	watchdog <timeout> (<timeout> is 0 (off), 1-120 (seconds))
 ||status|| ||enabled|| |||| ('status:		enabled')
-||speed|| ||3444|| |||| ('speed:		3444')
-||level|| ||2|| |||| ('level:		2')
+||speed|| ||1953|| |||| ('speed:		1953')
+||level|| ||1|| |||| ('level:		1')
 ||commands|| ||level <level> || ||(<level> is 0-7, auto, disengaged, full-speed)|| ('commands:	level <level> (<level> is 0-7, auto, disengaged, full-speed)')
 ||commands|| ||enable, disable|| |||| ('commands:	enable, disable')
 ||commands|| ||watchdog <timeout> || ||(<timeout> is 0 (off), 1-120 (seconds))|| ('commands:	watchdog <timeout> (<timeout> is 0 (off), 1-120 (seconds))')
 $VAR1 = {
-          'level' => '2',
-          'speed' => '3444',
+          'level' => '1',
+          'speed' => '1953',
           'status' => 'enabled',
           'commands' => {
                           'enable, disable' => 1,
@@ -100,11 +111,43 @@ $VAR1 = {
                           'level <level>' => 1
                         }
         };
-temperature:             48 C
-||temperature|| ||48 C|| |||| ('temperature:             48 C')
+temperature:             54 C
+||temperature|| ||54 C|| |||| ('temperature:             54 C')
 $VAR1 = {
-          'temperature' => '48 C'
+          'temperature' => '54 C'
         };
-CPU temperature: 48 (degree Celsia)
+CPU temperature: 54 (degree Celsia)
+trend: up
+Setting level to '2' (54 C), previous level was '1' (52 C). Trend is 'up'.
+level 2Run number: 3
+status:		enabled
+speed:		3424
+level:		2
+commands:	level <level> (<level> is 0-7, auto, disengaged, full-speed)
+commands:	enable, disable
+commands:	watchdog <timeout> (<timeout> is 0 (off), 1-120 (seconds))
+||status|| ||enabled|| |||| ('status:		enabled')
+||speed|| ||3424|| |||| ('speed:		3424')
+||level|| ||2|| |||| ('level:		2')
+||commands|| ||level <level> || ||(<level> is 0-7, auto, disengaged, full-speed)|| ('commands:	level <level> (<level> is 0-7, auto, disengaged, full-speed)')
+||commands|| ||enable, disable|| |||| ('commands:	enable, disable')
+||commands|| ||watchdog <timeout> || ||(<timeout> is 0 (off), 1-120 (seconds))|| ('commands:	watchdog <timeout> (<timeout> is 0 (off), 1-120 (seconds))')
+$VAR1 = {
+          'level' => '2',
+          'speed' => '3424',
+          'status' => 'enabled',
+          'commands' => {
+                          'enable, disable' => 1,
+                          'watchdog <timeout>' => 1,
+                          'level <level>' => 1
+                        }
+        };
+temperature:             52 C
+||temperature|| ||52 C|| |||| ('temperature:             52 C')
+$VAR1 = {
+          'temperature' => '52 C'
+        };
+CPU temperature: 52 (degree Celsia)
 trend: down
-Setting level to '1' (48 C), previous level was '2' (50 C). Trend is 'down'.
+Setting level to '1' (52 C), previous level was '2' (54 C). Trend is 'down'.
+
