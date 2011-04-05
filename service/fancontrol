@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# fancontrol        Startup script for the fan control
+#
+# description: Startup script for the fancontrol
+#
+### BEGIN INIT INFO
+# Short-Description: Trigger fancontrol start-up
+# Description: Trigger fancontrol start-up
+### END INIT INFO
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# ToDo
+#[ -e /etc/sysconfig/bluetooth ] && . /etc/sysconfig/bluetooth
+
+start() {
+	  echo -n $"Starting fancontrol: "
+	  /usr/bin/perl /usr/local/bin/fancontrol.pl --daemon-start
+	  return 0
+}
+
+stop() {
+	  echo -n $"Stoppping fancontrol: "
+	  /usr/bin/perl /usr/local/bin/fancontrol.pl --daemon-stop
+	  return 0
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 3
+esac
+
+exit $RETVAL
