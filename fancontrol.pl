@@ -78,9 +78,16 @@ sub parse_acpi_file {
 }
 
 
+sub get_sys_file {
+    my ( $fpath ) = @_;
+    my $content = get_file_content( $fpath );
+    chomp $content;
+    return $content;
+}
+
+
 sub set_fan_level {
     my ( $fan_proc_fpath, $level_str ) = @_;
-    
     my $content = 'level ' . $level_str;
     return write_file_content( $fan_proc_fpath, $content );
 }
@@ -91,7 +98,7 @@ my $main_sub = sub {
     my ( $conf ) = @_;
 
     my $fan_proc_fpath = '/proc/acpi/ibm/fan';
-    my $temper_proc_fpath = '/proc/acpi/thermal_zone/THM0/temperature';
+    my $temper_sys_fpath = '/sys/devices/platform/thinkpad_acpi/subsystem/devices/thinkpad_hwmon/temp1_input';
 
     my $do_loop = 1;
     my $rnum = 1;
@@ -109,14 +116,10 @@ my $main_sub = sub {
             croak "Can't find command 'level <level>' inside '$fan_proc_fpath'.";
         }
 
-        my $temper_data = parse_acpi_file( $temper_proc_fpath );
-        print Dumper( $temper_data ) if $ver >= 4;
-        unless ( exists $temper_data->{temperature} ) {
-            croak "Can't find temperature key inside '$temper_proc_fpath'.";
-        }
-        my $temper_str = $temper_data->{temperature};
-        my ( $tcpu, $suffix ) = $temper_str =~ /^(\d+)\s+(C)$/;
-        unless ( $tcpu ) {
+        my $tcpu;
+        my $temper_str = get_sys_file( $temper_sys_fpath );
+        print "temper_str: '$temper_str'\n" if $ver >= 4;
+        unless ( ($tcpu) = $temper_str =~ /^(\d+)000$/ ) {
             croak "Can't parse temperature value '$temper_str'.";
         }
         print "CPU temperature: $tcpu (degree Celsia)\n" if $ver >= 4;
